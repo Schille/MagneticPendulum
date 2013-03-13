@@ -11,3 +11,11 @@ class ClusterClient():
         manager = ClusterQueueManager(address=(Parameter.SERVER, Parameter.PORT),\
                                    authkey=Parameter.PASSWORD)
         manager.connect()
+        
+        
+
+
+def startClient():
+    manager = Manager()
+    workerRunning = manager.Value('i', 0)
+    
