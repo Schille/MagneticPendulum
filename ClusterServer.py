@@ -9,23 +9,12 @@ import Parameter
 
 
 class ServerManager(BaseManager):
-   
-        
-    def registerClient(self):
-        self.clients += 1
-        
-    def unregisterClient(self):
-        self.clients -= 1
-
-  
     def __setUp_Server(self):
         manager = ClusterQueueManager(address=(Parameter.SERVER, Parameter.PORT),\
                                    authkey=Parameter.PASSWORD)
         
-        manager.register("registerClient",registerClient)
-        manager.register("unregisterClient", unregisterClient)
         server = manager.get_server()
-        server.start()
+        manager.start()
         
         
     def __init__(self):
