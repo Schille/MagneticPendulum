@@ -7,13 +7,9 @@ class ClusterClient():
         self.__connectToServer()
 
 
-    def __connectToServer():
+    def __connectToServer(self):
         manager = ClusterQueueManager(address=(Parameter.SERVER, Parameter.PORT),\
                                    authkey=Parameter.PASSWORD)
-        manager.connect()
-        
-        
-
 
 def startClient():
     manager = Manager()
