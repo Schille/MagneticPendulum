@@ -97,8 +97,9 @@ if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_handler)
     
     parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--client", help="starts an client instance")
-    parser.add_argument("-s", "--server", help="starts an server instance, which also paints the output")
+    parser.add_argument("-c", "--client", help="starts an client instance", action="store_true")
+    parser.add_argument("-s", "--server", help="starts an server instance, which also paints the output",\
+                        action="store_true")
     args = parser.parse_args()
     
     if args.client:
