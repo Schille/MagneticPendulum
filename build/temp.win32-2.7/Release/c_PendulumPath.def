@@ -1,0 +1,3 @@
+LIBRARY c_PendulumPath.pyd
+EXPORTS
+initc_PendulumPath
