@@ -1,5 +1,6 @@
 import numpy as np
 import Parameter
+import argparse
 import time
 from multiprocessing import Pool, Manager, Process, Value
 import Equations as calc
@@ -58,9 +59,14 @@ def drawImage(im, data, pixel, myValues):
         im.save(Parameter.IMG_NAME)
     
     
-def main():
+def startStandalone():
+    print('MagneticPendulum  -Standalone')
+    print('--------------------------------------------')
+    print('Image resolution: {0}x{0} Output: {1}'.format(Parameter.RESOLUTION, Parameter.IMG_NAME))
+    print('Working with {0} sub-processes in total.'.format(Parameter.MAX_PROCESSES))
+    print('============================================')
+    start = time.time()
     im= Image.new('RGB', (Parameter.RESOLUTION, Parameter.RESOLUTION))
-    worker = []
     data = []
     pixel = [] + [0]*(Parameter.RESOLUTION**2)
     manager = Manager()
@@ -75,18 +81,30 @@ def main():
         drawImage(im, data, pixel, values)
         time.sleep(60)
     drawImage(im, data, pixel, values)
+    print('Image succeeded. Time consumed: {0:.2f}s'.format((time.time() - start)))
+    print('Exiting...')
+    sys.exit(0)
+    
+def startServer():
+    pass
+
+
+def startClient():
+    pass
   
 
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_handler)
-    print('MagneticPendulum  -Multiprocessed')
-    print('--------------------------------------------')
-    print('Image resolution: {0}x{0} Output: {1}'.format(Parameter.RESOLUTION, Parameter.IMG_NAME))
-    print('Working with {0} sub-processes in total.'.format(Parameter.MAX_PROCESSES))
-    print('============================================')
-    start = time.time()
-    main()
-    print('Image succeeded. Time consumed: {0:.2f}s'.format((time.time() - start)))
-    print('Exiting...')
-    sys.exit(0)
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-c", "--client", help="starts an client instance")
+    parser.add_argument("-s", "--server", help="starts an server instance, which also paints the output")
+    args = parser.parse_args()
+    
+    if args.client:
+        startClient()
+    elif args.server:
+        startServer()
+    else:
+        startStandalone()
 
