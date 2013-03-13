@@ -11,7 +11,4 @@ class ClusterClient():
         manager = ClusterQueueManager(address=(Parameter.SERVER, Parameter.PORT),\
                                    authkey=Parameter.PASSWORD)
         
-        manager.register('get_queue')
-        manager.connect()
-        
-        return manager.get_queue(Parameter.DEFLECTIONS)
+  
