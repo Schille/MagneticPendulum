@@ -2,23 +2,28 @@ from multiprocessing.managers import BaseManager
 from multiprocessing import Manager
 import Parameter
 
+import time
+
+
+
 class ClusterQueueManager(BaseManager):
-      
-    def __init__(self, myMode):
+    clientsRunning = 0 
+    def __init__(self, myMode=''):
         BaseManager.__init__(self,address=(Parameter.SERVER, Parameter.PORT), authkey=Parameter.PASSWORD)
-        self.clientsRunning = 0
         self._manager = Manager()
         self._coordinates = self._manager.Queue()
         self._values = self._manager.Queue()
-        self.register('getCoordinatesQueue', self.getCoordinatesQueue)
-        self.register('getValesQueue', self.getCoordinatesQueue)
+        ClusterQueueManager.register('getCoordinatesQueue', self.getCoordinatesQueue)
+        ClusterQueueManager.register('getValesQueue', self.getCoordinatesQueue)
     
         if myMode == 'Server':
-            self.register('clientRun', self.addClient)
+            print('Server')
+            self.register('clientStart', self.addClient)
             self.register('clientDone', self.removeClient)
         else:
-            self.register('clientRun')
+            self.register('clientStart')
             self.register('clientDone')
+            
         
     
     def getCoordinatesQueue(self):
@@ -26,11 +31,12 @@ class ClusterQueueManager(BaseManager):
     
     def getValuesQueue(self):
         return self._values
-    
+
+ 
     def addClient(self):
+        print('added client')
         self.clientsRunning += 1
     
     def removeClient(self):
         self.clientsRunning -= 1
-    
     

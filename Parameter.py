@@ -18,7 +18,7 @@ MAGNET_EPSILON = 0.04
 MAX_PROCESSES = 5
 SERVER = '127.0.0.1'
 PORT = 5000
-PASSWORD = 'abc'
+PASSWORD = 'abc'.encode(encoding='utf_8', errors='strict')
 DEFLECTIONS = 10000
 
 IMG_NAME = 'output.png'
