@@ -10,11 +10,16 @@ class ClusterQueueManager(BaseManager):
         self._manager = Manager()
         self._coordinates = self._manager.Queue()
         self._values = self._manager.Queue()
+        self._lock = self._manager.Lock()
         self._clientCounter = self._manager.Value('i', 0)
         self.register('clientStart', self.addClient)
         self.register('clientDone', self.removeClient)
+        self.register('getCoordinatesLock', self.getCoordinatesLock)
         self.register('getCoordinatesQueue', self.getCoordinates)
         self.register('getValuesQueue', self.getCoordinates)
+
+    def getCoordinatesLock(self):
+        return self._lock
 
     def getCoordinates(self):
         return self._coordinates
