@@ -20,9 +20,9 @@ def startStandalone():
     values = manager.Queue()
     workerRunning = manager.Value('i', 0)
     Simulation.createAllCoordinates(coordinates, data) 
-    while workerRunning.value < Parameter.MAX_PROCESSES:
+    while workerRunning.get() < Parameter.MAX_PROCESSES:
         Process(target=Simulation.workerThread,args=(coordinates, workerRunning, values)).start()
-        time.sleep(0.1)
+        time.sleep(1)
     while workerRunning.value > 0:
         Simulation.drawImage(im, data, pixel, values)
         time.sleep(Parameter.REPAINT)

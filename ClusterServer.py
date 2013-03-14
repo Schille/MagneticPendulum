@@ -9,19 +9,25 @@ import sys
         
 def startServer():
     import Simulation
-    manager = ClusterQueueManager(address=(Parameter.SERVER, Parameter.PORT),\
-                                   authkey=Parameter.PASSWORD)
-    manager.start()
+    manager = ClusterQueueManager()
     data = []
     coordinates = manager.getCoordinates()
+    values = manager.getValues()
     im= Image.new('RGB', (Parameter.RESOLUTION, Parameter.RESOLUTION))
     pixel = [] + [0]*(Parameter.RESOLUTION**2)
     Simulation.createAllCoordinates(coordinates, data)
-    values = manager.getValuesQueue() 
     start = time.time()
+    manager.start()
     while not coordinates.empty():
-        Simulation.drawImage(im, data, pixel, values)
+        while manager.getRunningClients() > 0:
+            if not values.empty():
+                Simulation.drawImage(im, data, pixel, values)
+            time.sleep(Parameter.REPAINT)
+        time.sleep(5)
+    
+    while manager.getRunningClients() > 0:
         time.sleep(Parameter.REPAINT)
+        print("Waiting for {0} clients to be done".format(manager.getRunningClients()))
     Simulation.drawImage(im, data, pixel, values)
     print('Image succeeded. Time consumed: {0:.2f}s'.format((time.time() - start)))
     print('Exiting...')

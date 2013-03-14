@@ -15,7 +15,7 @@ class ClusterQueueManager(BaseManager):
         self.register('clientDone', self.removeClient)
         self.register('getCoordinatesLock', self.getCoordinatesLock)
         self.register('getCoordinatesQueue', self.getCoordinates)
-        self.register('getValuesQueue', self.getCoordinates)
+        self.register('getValuesQueue', self.getValues)
 
     def getCoordinatesLock(self):
         return self._lock
@@ -23,14 +23,14 @@ class ClusterQueueManager(BaseManager):
     def getCoordinates(self):
         return self._coordinates
     
-    def getValuesQueue(self):
+    def getValues(self):
         return self._values
     
     def addClient(self):
         self._clientCounter.set(self._clientCounter.get() + 1)
     
     def removeClient(self):
-        self._clientCounter.set(self._clientCounter.get() + 1)
+        self._clientCounter.set(self._clientCounter.get() - 1)
         
     def getRunningClients(self):
         return self._clientCounter.get()    

@@ -31,9 +31,9 @@ def createAllCoordinates(coordinates, data):
     
 
 def workerThread(myCoordinates, myWorkerRunning, myPixel):
-    myWorkerRunning.value += 1
+    myWorkerRunning.set(myWorkerRunning.get() + 1)
     if myCoordinates.empty():
-        myWorkerRunning.value -= 1
+        myWorkerRunning.set(myWorkerRunning.get() - 1)
         return
     else:
         while not myCoordinates.empty():
@@ -43,7 +43,7 @@ def workerThread(myCoordinates, myWorkerRunning, myPixel):
             myPixel.put((coord[2],color))
             myPixel.task_done()
             myCoordinates.task_done()
-        myWorkerRunning.value -= 1
+        myWorkerRunning.set(myWorkerRunning.get() - 1)
     return 0
 
 
@@ -58,7 +58,6 @@ def drawImage(im, data, pixel, myValues):
     if data is not None:
         im.putdata(pixel)
         im.save(Parameter.IMG_NAME)
-    
     
 
 
