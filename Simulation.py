@@ -2,7 +2,8 @@ import numpy as np
 import Parameter
 import argparse
 import time
-from multiprocessing import Pool, Manager, Process, Value
+from multiprocessing import Manager, Process
+import Client
 import Equations as calc
 import Image
 import signal
@@ -89,8 +90,11 @@ def startServer():
     pass
 
 
-def startClient():
-    pass
+
+        
+        
+    
+    
   
 
 if __name__ == "__main__":
@@ -103,7 +107,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     if args.client:
-        startClient()
+        Client.startClient()
     elif args.server:
         startServer()
     else:
