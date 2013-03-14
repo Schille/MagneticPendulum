@@ -2,7 +2,6 @@ from multiprocessing.managers import BaseManager
 from multiprocessing import Manager
 import Parameter
 
-
 class ClusterQueueManager(BaseManager):
     
     def __init__(self):
@@ -34,7 +33,4 @@ class ClusterQueueManager(BaseManager):
         self._clientCounter.set(self._clientCounter.get() + 1)
         
     def getRunningClients(self):
-        return self._clientCounter.get()
-        
-
-    
+        return self._clientCounter.get()    
