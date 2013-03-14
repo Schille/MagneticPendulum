@@ -9,7 +9,7 @@ PROPOTIONAL_CONST = 5.
 MASS = 1.
 
 
-RESOLUTION = 20        #Resolution in pixel
+RESOLUTION = 40      #Resolution in pixel
 STEP_SIZE = 2.8/RESOLUTION      #stepsize for deflections
 STEP_COUNT = 100
 STEP_WIDE = 99
@@ -19,7 +19,7 @@ MAX_PROCESSES = 2
 SERVER = '127.0.0.1'
 PORT = 5000
 PASSWORD = 'abc'.encode(encoding='utf_8', errors='strict')
-CHUNKSIZE = 10
+CHUNKSIZE = 100
 
 REPAINT = 20
 

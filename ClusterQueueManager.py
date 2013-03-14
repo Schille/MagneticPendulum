@@ -28,9 +28,11 @@ class ClusterQueueManager(BaseManager):
     
     def addClient(self):
         self._clientCounter.set(self._clientCounter.get() + 1)
+        print("A client has been connected. Now {0} clients working.".format(self._clientCounter.get()))
     
     def removeClient(self):
         self._clientCounter.set(self._clientCounter.get() - 1)
+        print("A client has been disconnected. Now {0} client(s) working.".format(self._clientCounter.get()))
         
     def getRunningClients(self):
         return self._clientCounter.get()    

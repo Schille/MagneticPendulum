@@ -1,7 +1,6 @@
 import numpy as np
 import Parameter
 import argparse
-import time
 import Client
 import Equations as calc
 import signal
@@ -69,7 +68,7 @@ if __name__ == "__main__":
     parser.add_argument("-s", "--server", help="starts an server instance, which also paints the output",\
                         action="store_true")
     args = parser.parse_args()
-    
+    print()
     if args.client:
         Client.startClient()
     elif args.server:

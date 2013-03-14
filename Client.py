@@ -4,10 +4,18 @@ import time
 from multiprocessing import Manager, Process
 
 def startClient():
+    print('MagneticPendulum  -Cluster/Client')
+    print('--------------------------------------------')
+    print('Connecting to server: {0} on port {1}'.format(Parameter.SERVER, Parameter.PORT))
+    print('Working with {0} sub-processes in total.'.format(Parameter.MAX_PROCESSES))
+    print('============================================')
     import Simulation
     manager = ClusterQueueManager()
     localManager = Manager()
-    manager.connect()
+    try:
+        manager.connect()
+    except:
+        print("Could not connect to server, review settings!")
     manager.clientStart()
     all_coordinates = manager.getCoordinatesQueue()
     all_values = manager.getValuesQueue()
@@ -22,15 +30,18 @@ def startClient():
         lock.release()
         
         while workerRunning.get() < Parameter.MAX_PROCESSES:
-            Process(target=Simulation.workerThread,args=(localCoordinates, workerRunning, localvalues)).start()
+            if workerRunning.get() < localCoordinates.qsize():
+                Process(target=Simulation.workerThread,args=(localCoordinates, workerRunning, localvalues)).start()
+            else:
+                break
             time.sleep(0.5)
-        
-        while localCoordinates.qsize() > 5:
+    
+        while not localCoordinates.empty():
             while not localvalues.empty():
                 all_values.put(localvalues.get())
         time.sleep(1)
         
-    while workerRunning.get():
+    while workerRunning.get() > 0:
         print("Waiting for {0} worker to be done.". format(str(workerRunning.get())))
         time.sleep(1)
     
@@ -38,6 +49,7 @@ def startClient():
         all_values.put(localvalues.get())
         
     manager.clientDone()
+    print("Client Done.")
     return 0
         
             
