@@ -7,6 +7,7 @@ import Equations as calc
 import signal
 import sys
 import Standalone
+import ClusterServer
 
 
 
@@ -73,8 +74,7 @@ if __name__ == "__main__":
     if args.client:
         Client.startClient()
     elif args.server:
-        pass
-        #startServer()
+        ClusterServer.startServer()
     else:
         Standalone.startStandalone()
 
