@@ -2,6 +2,7 @@ from ClusterQueueManager import ClusterQueueManager
 import Parameter
 import time
 from multiprocessing import Manager, Process
+import sys
 
 def startClient():
     print('MagneticPendulum  -Cluster/Client')
@@ -64,6 +65,16 @@ def fetchCoordinates(myLocalQueue, myCoordinatesQueue):
     
 def fetchProcess(myLocalQueue, myCoordinatesQueue):
     while not myCoordinatesQueue.empty():
-        myLocalQueue.put(myCoordinatesQueue.get_nowait())
-    print("End fetching.")
+        myLocalQueue.join()
+        count = 0
+        print("Start chunk fetching.")
+        while count < Parameter.CHUNKSIZE:
+            try:
+                myLocalQueue.put(myCoordinatesQueue.get_nowait())
+                count += 1
+            except:
+                print("All coordinates fetched. Exiting the fetcher...")
+                sys.exit(0)
+        print("Chunk fetching done.")
+    print("All coordinates fetched. Exiting the fetcher...")
                                 

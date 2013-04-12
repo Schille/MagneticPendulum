@@ -9,7 +9,7 @@ PROPOTIONAL_CONST = 5.
 MASS = 1.
 
 
-RESOLUTION = 100    #Resolution in pixel
+RESOLUTION = 50    #Resolution in pixel
 STEP_SIZE = 2.8/RESOLUTION      #stepsize for deflections
 STEP_COUNT = 100
 STEP_WIDE = 99
