@@ -62,7 +62,6 @@ def drawImage(im, data, pixel, myValues):
 
 
 if __name__ == "__main__":
-    freeze_support()
     signal.signal(signal.SIGINT, signal_handler)
     
     parser = argparse.ArgumentParser()
