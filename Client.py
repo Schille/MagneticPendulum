@@ -65,7 +65,8 @@ def fetchCoordinates(myLocalQueue, myCoordinatesQueue):
     
 def fetchProcess(myLocalQueue, myCoordinatesQueue):
     while not myCoordinatesQueue.empty():
-        myLocalQueue.join()
+        while myLocalQueue.qsize() > 60:
+            time.sleep(5)
         count = 0
         print("Start chunk fetching.")
         while count < Parameter.CHUNKSIZE:
