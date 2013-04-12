@@ -26,7 +26,6 @@ def startServer():
     while not coordinates.empty():
         while manager.getRunningClients() > 0:
             if not values.empty():
-                print("Receiving values...")
                 Simulation.drawImage(im, data, pixel, values)
             time.sleep(Parameter.REPAINT)
         time.sleep(.5)

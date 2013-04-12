@@ -24,10 +24,11 @@ def startClient():
     localvalues = localManager.Queue()
     workerRunning = localManager.Value('i', 0)
     
+    Process(target=fetchProcess,args=(localCoordinates, all_coordinates)).start()
     while not all_coordinates.empty():
-        lock.acquire()
-        fetchCoordinates(localCoordinates, all_coordinates)
-        lock.release()
+        '''lock.acquire()'''
+        '''fetchCoordinates(localCoordinates, all_coordinates)'''
+        '''lock.release()'''
         
         while workerRunning.get() < Parameter.MAX_PROCESSES:
             if workerRunning.get() < localCoordinates.qsize():
@@ -60,3 +61,9 @@ def fetchCoordinates(myLocalQueue, myCoordinatesQueue):
         myLocalQueue.put(myCoordinatesQueue.get())
         count += 1
     print("Fetching of {0} coordinates done.".format(count))
+    
+def fetchProcess(myLocalQueue, myCoordinatesQueue):
+    while not myCoordinatesQueue.empty():
+        myLocalQueue.put(myCoordinatesQueue.get_nowait())
+    print("End fetching.")
+                                

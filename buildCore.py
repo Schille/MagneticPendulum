@@ -1,2 +1,2 @@
 #!/usr/bin/env python
-python setup.py build_ext --inplace
+setup.py build_ext --inplace

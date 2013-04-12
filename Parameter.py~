@@ -9,13 +9,22 @@ PROPOTIONAL_CONST = 5.
 MASS = 1.
 
 
-RESOLUTION = 500         #Resolution in pixel
+RESOLUTION = 150     #Resolution in pixel
 STEP_SIZE = 2.8/RESOLUTION      #stepsize for deflections
 STEP_COUNT = 100
 STEP_WIDE = 99
 MAGNET_EPSILON = 0.04
 
-MAX_PROCESSES = 5
+MAX_PROCESSES = 1
+SERVER = '78.47.166.24'
+PORT = 5005
+PASSWORD = 'abc'.encode(encoding='utf_8', errors='strict')
+CHUNKSIZE = 1000
+
+REPAINT = 20
+
+DEFLECTIONS = 10000
+
 IMG_NAME = 'output.png'
 
 INITIAL_DEFLECTION_X = -1.4
