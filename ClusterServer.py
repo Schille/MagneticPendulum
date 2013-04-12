@@ -1,4 +1,5 @@
 from multiprocessing.managers import BaseManager
+from multiprocessing import freeze_support
 from ClusterQueueManager import ClusterQueueManager
 import Parameter
 import time
@@ -8,6 +9,7 @@ import sys
 
         
 def startServer():
+    freeze_support()
     print('MagneticPendulum  -Cluster/Server')
     print('--------------------------------------------')
     print('Image resolution: {0}x{0} Output: {1}'.format(Parameter.RESOLUTION, Parameter.IMG_NAME))

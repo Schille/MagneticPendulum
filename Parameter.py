@@ -15,7 +15,7 @@ STEP_COUNT = 100
 STEP_WIDE = 99
 MAGNET_EPSILON = 0.04
 
-MAX_PROCESSES = 2
+MAX_PROCESSES = 3
 SERVER = '192.168.1.3'
 PORT = 5005
 PASSWORD = 'abc'.encode(encoding='utf_8', errors='strict')

@@ -7,6 +7,7 @@ import signal
 import sys
 import Standalone
 import ClusterServer
+from multiprocessing import freeze_support
 
 
 
@@ -61,6 +62,7 @@ def drawImage(im, data, pixel, myValues):
 
 
 if __name__ == "__main__":
+    freeze_support()
     signal.signal(signal.SIGINT, signal_handler)
     
     parser = argparse.ArgumentParser()
@@ -68,7 +70,7 @@ if __name__ == "__main__":
     parser.add_argument("-s", "--server", help="starts an server instance, which also paints the output",\
                         action="store_true")
     args = parser.parse_args()
-    print()
+
     if args.client:
         Client.startClient()
     elif args.server:
